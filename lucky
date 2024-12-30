@@ -294,7 +294,6 @@ for f, f in next, workspace:GetChildren() do
                 Duration = 10
             }
         )
-        sendToDiscord("Đã nhặt được:" ..f.Name)
         local a =
             b:FindFirstChildOfClass("Tool") and b:FindFirstChildOfClass("Tool").Name:find("Fruit") and
             b:FindFirstChildOfClass("Tool") or
@@ -316,7 +315,6 @@ end
 
 -- Nếu không có trái cây, thông báo "Không tìm thấy trái trong server"
 if not fruitsFound then
-    sendToDiscord("Không Có Thấy Trái Trong Server")
     game.StarterGui:SetCore(
         "SendNotification",
         {
@@ -326,6 +324,8 @@ if not fruitsFound then
         }
     )
 end
+if not fruitsFound then
+    sendToDiscord("Không tìm thấy trái cây trong server.")
 -- Thông báo đổi server (hiện một lần)
 local serverHopNotified = false  -- Biến kiểm tra đã thông báo chưa
 
