@@ -83,21 +83,6 @@ elseif placeId == sea3 then
 else
     CheckSea = "unknown sea"
 end
--- Thong bao nhat fruit
-local HttpService = game:GetService("HttpService")
-local webhookURL = "https://discordapp.com/api/webhooks/1322825601240793118/KN9EAVrt-2Iatl0HnrOMpbsk1rul31LOH6dSGkJexe5tDQWwxKsiwL15gq76WdMp5TBB"
-local function sendToDiscord(message)
-    local payload = {
-        ["content"] = message
-    }
-    local headers = {
-        ["Content-Type"] = "application/json"
-    }
-    local body = HttpService:JSONEncode(payload)
-
-    -- Gửi yêu cầu POST đến webhook
-    HttpService:PostAsync(webhookURL, body, Enum.HttpContentType.ApplicationJson, false, headers)
-end
 -- Data players
 local Players = game:GetService("Players")
 local playerCount = #game:GetService("Players"):GetPlayers()
@@ -247,7 +232,17 @@ local e = Instance.new("BodyAngularVelocity")
 e.AngularVelocity = Vector3.new()
 e.MaxTorque = Vector3.new(1 / 0, 1 / 0, 1 / 0)
 e.Name = "bAV"
+--Gui den ưebhook
+local discordWebhook = "https://discordapp.com/api/webhooks/1322825601240793118/KN9EAVrt-2Iatl0HnrOMpbsk1rul31LOH6dSGkJexe5tDQWwxKsiwL15gq76WdMp5TBB"
+local function sendToDiscord(playerName, fruitName)
+    local http = game:GetService("HttpService")
+    local message = {
+        ["content"] = playerName .. " đã lưu thành công trái " .. fruitName
+    }
+    local jsonMessage = http:JSONEncode(message)
 
+    http:PostAsync(discordWebhook, jsonMessage, Enum.HttpContentType.ApplicationJson)
+end
 -- Kiểm tra xem có trái cây không
 local fruitsFound = false  -- Biến kiểm tra xem có trái cây hay không
 
@@ -284,12 +279,15 @@ for f, f in next, workspace:GetChildren() do
             wait(1)
         until f.Parent ~= workspace
         wait(1)
-
+        local storedFruit = f.Name
+        if a.Name == game.Players.LocalPlayer.DisplayName and storedFruit == f.Name  then
+            sendToDiscord(a.Name, storedFruit) -- Gửi thông báo đến Discord
+        end
         -- Thông báo khi đã nhặt trái
         game.StarterGui:SetCore(
             "SendNotification",
             {
-                Title = "Turbo Lite",
+                Title = "Lucky",
                 Text = "Đã Nhặt Được: " .. f.Name,
                 Duration = 10
             }
@@ -315,7 +313,14 @@ end
 
 -- Nếu không có trái cây, thông báo "Không tìm thấy trái trong server"
 if not fruitsFound then
-    sendToDiscord("Không tìm thấy trái cây trong server.")
+    game.StarterGui:SetCore(
+        "SendNotification",
+        {
+            Title = "Lucky",
+            Text = "Không Có Thấy Trái Trong Server",
+            Duration = 5
+        }
+    )
 end
 -- Thông báo đổi server (hiện một lần)
 local serverHopNotified = false  -- Biến kiểm tra đã thông báo chưa
