@@ -14,7 +14,6 @@ LinkLabel.Size = UDim2.new(0, 250, 0, 20) -- Điều chỉnh chiều rộng (250
 LinkLabel.Font = Enum.Font.SourceSans
 LinkLabel.TextColor3 = Color3.new(1, 1, 1)
 LinkLabel.TextSize = 14
-LinkLabel.Text = "Join: dsc.gg/meowx"
 LinkLabel.TextWrapped = true
 LinkLabel.TextScaled = false
 PingLabel.Name = "PingLabel"
@@ -151,7 +150,7 @@ Request(Final)
 
 -- Thông Báo 
 require(game.ReplicatedStorage:WaitForChild("Notification")).new(
-            " <Color=Green>Turbo Lite — Auto Nhặt Trái<Color=/> "
+            " <Color=Green>Lucky<Color=/> "
         ):Display()
 -- Thông Báo 
 require(game.ReplicatedStorage:WaitForChild("Notification")).new(
@@ -288,7 +287,7 @@ for f, f in next, workspace:GetChildren() do
 
         -- Thông báo khi đã nhặt trái
         game.StarterGui:SetCore(
-            "SendNotification" and "message",
+            "SendNotification" and sendToDiscord("Đã nhặt được:" ..f.Name),
             {
                 Title = "Turbo Lite",
                 Text = "Đã Nhặt Được: " .. f.Name,
@@ -314,6 +313,7 @@ for f, f in next, workspace:GetChildren() do
         )
     end
 end
+-- Nhat fruit va thong bao ve discord
 
 -- Nếu không có trái cây, thông báo "Không tìm thấy trái trong server"
 if not fruitsFound then
