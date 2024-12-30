@@ -237,7 +237,7 @@ local discordWebhook = "https://discordapp.com/api/webhooks/1322825601240793118/
 local function sendToDiscord(playerName, fruitName)
     local http = game:GetService("HttpService")
     local message = {
-        ["content"] = playerName .. " đã lưu thành công trái " .. fruitName
+        ["content"] = game.Players.LocalPlayer.DisplayName .. " đã lưu thành công trái " .. f.Name
     }
     local jsonMessage = http:JSONEncode(message)
 
@@ -279,11 +279,9 @@ for f, f in next, workspace:GetChildren() do
             wait(1)
         until f.Parent ~= workspace
         wait(1)
-        local storedFruit = f.Name
-        if a.Name == game.Players.LocalPlayer.DisplayName and storedFruit == f.Name  then
-            sendToDiscord(a.Name, storedFruit) -- Gửi thông báo đến Discord
-        end
         -- Thông báo khi đã nhặt trái
+        local storedFruit = f.Name
+        sendToDiscord(a.Name, storedFruit) -- Gửi thông báo đến Discord
         game.StarterGui:SetCore(
             "SendNotification",
             {
@@ -423,7 +421,7 @@ repeat
                 game.StarterGui:SetCore(
                     "SendNotification",
                     {
-                        Title = "Turbo Lite",
+                        Title = "Lucky",
                         Text = "Đang Đổi Server",
                         Duration = 10
                     }
