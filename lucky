@@ -287,14 +287,14 @@ for f, f in next, workspace:GetChildren() do
 
         -- Thông báo khi đã nhặt trái
         game.StarterGui:SetCore(
-            "SendNotification" and sendToDiscord("Đã nhặt được:" ..f.Name),
+            "SendNotification",
             {
                 Title = "Turbo Lite",
                 Text = "Đã Nhặt Được: " .. f.Name,
                 Duration = 10
             }
         )
-
+        sendToDiscord("Đã nhặt được:" ..f.Name)
         local a =
             b:FindFirstChildOfClass("Tool") and b:FindFirstChildOfClass("Tool").Name:find("Fruit") and
             b:FindFirstChildOfClass("Tool") or
@@ -313,7 +313,6 @@ for f, f in next, workspace:GetChildren() do
         )
     end
 end
--- Nhat fruit va thong bao ve discord
 
 -- Nếu không có trái cây, thông báo "Không tìm thấy trái trong server"
 if not fruitsFound then
@@ -325,8 +324,8 @@ if not fruitsFound then
             Duration = 5
         }
     )
+    sendToDiscord("Không Có Thấy Trái Trong Server")
 end
-
 -- Thông báo đổi server (hiện một lần)
 local serverHopNotified = false  -- Biến kiểm tra đã thông báo chưa
 
