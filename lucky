@@ -315,17 +315,8 @@ end
 
 -- Nếu không có trái cây, thông báo "Không tìm thấy trái trong server"
 if not fruitsFound then
-    game.StarterGui:SetCore(
-        "SendNotification",
-        {
-            Title = "Turbo Lite",
-            Text = "Không Có Thấy Trái Trong Server",
-            Duration = 5
-        }
-    )
-end
-if not fruitsFound then
     sendToDiscord("Không tìm thấy trái cây trong server.")
+end
 -- Thông báo đổi server (hiện một lần)
 local serverHopNotified = false  -- Biến kiểm tra đã thông báo chưa
 
